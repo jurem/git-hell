@@ -73,7 +73,7 @@ store_key() {
 repo_path() {
 	local user=$1
 	local repo=$2
-	echo "$user-$repo.git"
+	echo "$repodir/$(basename $user-$repo .git).git"
 }
 
 
@@ -83,5 +83,15 @@ repo_init() {
 	mkdir -p "$repodir"
 	git init -q --bare "$(repo_path $user $repo)"
 	echo "Initialized repository '$repo'."
+}
+
+
+run_git() {
+	local user=$1
+	local gitcmd=${2:4}
+	local gitrep=${3#\'}
+	gitrep=${gitrep%\'}
+	git $gitcmd $(repo_path $user $gitrep)
+	exit
 }
 

@@ -2,16 +2,6 @@
 . $(dirname $0)/libhell
 
 
-exec_git() {
-	read cmd args <<< $2 
-	repo=${args/\'/\'$HOME/repos\/$1-}
-        repo=${repo:1}
-        repo=${repo:0:-1}
-        git receive-pack "$repo"
-	exit
-}	
-
-
 shift			# get rid of -c, no check!
 set $*
 if [ "$1" == "auth" ]; then
@@ -29,7 +19,7 @@ fi
 check_credentials
 
 [ -z "$command" ] && err 'missing command.'
-[ "${command:0:3}" = "git" ] && exec_git "$user" "$command"
+[ "${command:0:3}" = "git" ] && run_git "$user" $command
 
 set $command
 execfile="$execdir/cmd_$1"
