@@ -1,0 +1,13 @@
+#!/bin/bash
+. $(dirname $0)/libhell
+
+user=$1
+
+cd "$repodir"
+for f in $user-*; do
+   [ -d "$f" ] && echo "${f#$user-}"
+done
+
+exit 0
+
+# isbare: "$(git --git-dir="$1" rev-parse --is-bare-repository)" = true
