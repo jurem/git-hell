@@ -1,5 +1,6 @@
 #!/bin/bash
 
+version='0.1 alpha'
 githelldir=~/git-hell
 execdir="$githelldir/exec"
 confdir="$githelldir/conf"
