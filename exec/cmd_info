@@ -8,6 +8,7 @@ git --version
 sed --version | head -1
 tempfile --version
 mkdir --version | head -1
+basename --version | head -1
 dirname --version | head -1
 
 exit 0
