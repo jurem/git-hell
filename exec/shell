@@ -34,7 +34,8 @@ check_credentials
 set $command
 execfile="$execdir/cmd_$1"
 test -x "$execfile" || err "Invalid command '$1'."
-$execfile $user
+shift	# ignore command name $1
+$execfile $user $*
 
 exit 0
 			

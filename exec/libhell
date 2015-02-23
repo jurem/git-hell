@@ -4,7 +4,7 @@ githelldir=~/git-hell
 execdir="$githelldir/exec"
 confdir="$githelldir/conf"
 accountsfile="$confdir/accounts.csv"
-
+repodir="$githelldir/repo"
 
 bye() {
 	echo "$1"
@@ -59,8 +59,8 @@ account_change() {
 
 
 store_key() {
-        user=$1
-        key=$2
+        local user=$1
+        local key=$2
         mkdir -p ~/.ssh
         { echo -n "command=\"auth $user\","
           echo -n 'no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty '
@@ -68,4 +68,19 @@ store_key() {
         } >> ~/.ssh/authorized_keys
 }
 
+
+repo_path() {
+	local user=$1
+	local repo=$2
+	echo "$user-$repo.git"
+}
+
+
+repo_init() {
+	local user=$1
+	local repo=$2
+	mkdir -p "$repodir"
+	git init -q --bare "$(repo_path $user $repo)"
+	echo "Initialized repository '$repo'."
+}
 

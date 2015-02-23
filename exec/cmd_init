@@ -1,0 +1,11 @@
+#!/bin/bash
+. $(dirname $0)/libhell
+
+user=$1
+repo=$2
+
+cd "$repodir"
+repo_init $user $repo
+
+exit 0
+
