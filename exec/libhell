@@ -1,0 +1,71 @@
+#!/bin/bash
+
+confdir=~/conf
+accountsfile="$confdir/accounts.csv"
+
+
+bye() {
+	echo "$1"
+	exit ${2:-42}
+}
+
+
+err() {
+	echo "Error: $1"
+	exit ${2:-42}
+}
+
+
+die() {
+	echo "Fatal: $1"
+	exit ${2:-42}
+}
+
+
+trace() {
+	echo "$@" >&2
+}
+
+
+run_interactive_shell() {
+	err 'interactive shell disabled.'
+}
+
+
+check_credentials() {
+	$auth_key && return
+	# otherwise ask for password
+	echo -n "Enter git-hell password for '$user': "
+	read -s enterpass
+	account_read $user
+	[ -z "$user" -o "$account_pass" != "$enterpass" ] && bye 'Access denied.'
+}
+
+
+account_read() {
+	local user=$1
+	local file=${2:-$accountsfile}
+	read account_user account_pass account_active account_rest <<< $(egrep "^$user\>" "$file")
+	[ "$account_active" != "true" ] && account_active=false
+}
+
+
+account_change() {
+	local user=$1
+	sed -i.old -re "/^$user\>/s/.*/$1\t$2\t$3\t$4/" "$accountsfile"
+}
+
+
+
+
+store_key() {
+        user=$1
+        key=$2
+        mkdir -p ~/.ssh
+        { echo -n "command='auth $user',"
+          echo -n 'no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty '
+          echo "$key"
+        } >> ~/.ssh/authorized_keys
+}
+
+

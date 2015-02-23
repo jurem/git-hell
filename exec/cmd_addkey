@@ -1,0 +1,26 @@
+#!/bin/bash
+. $(dirname $0)/libhell
+. $(dirname $0)/libaccounts
+
+user=$1
+
+auth $user
+
+# Read in the SSH key
+echo -n "Enter key: "
+read key
+
+# write key to file
+keyfile=$(tempfile) && echo "$key" >$keyfile
+
+# check fingerprint
+if ! ssh-keygen -lf $keyfile &>/dev/null; then
+	rm $keyfile
+	die "Invalid key entered."
+fi
+
+rm $keyfile
+store_key "$user" "$key"
+echo 'Key successfuly added.'
+
+exit 0

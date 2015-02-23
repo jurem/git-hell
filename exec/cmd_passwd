@@ -1,0 +1,20 @@
+#!/bin/bash
+. $(dirname $0)/libhell
+
+user=$1
+
+# ask for new password (2 times)
+echo -n 'Enter new git-hell password: '
+read -s pass1
+echo -n 'Reenter new git-hell password: '
+read -s pass2
+
+# check if both password match
+[[ "$pass1" != "$pass2" ]] && bye 'Passwords do not match.'
+
+# change entry in accounts file
+account_read $user
+account_change "$account_user" "$pass1" true
+echo "Password for '$user' changed." 
+
+exit 0
