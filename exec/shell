@@ -32,7 +32,7 @@ check_credentials
 [ "${command:0:3}" = "git" ] && exec_git "$user" "$command"
 
 set $command
-execfile="exec/cmd_$1"
+execfile="$execdir/cmd_$1"
 test -x "$execfile" || err "Invalid command '$1'."
 $execfile $user
 
