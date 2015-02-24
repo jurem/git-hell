@@ -11,7 +11,6 @@ account_read $user
 $account_active && bye "Account '$user' already enabled."
 
 # enable account: write entry to accounts file
-account_enable $user
 account_change "$account_user" "$account_pass" true
 echo "Account '$user' enabled."
 

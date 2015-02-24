@@ -6,7 +6,7 @@ shift			# get rid of -c, no check!
 set $*
 if [ "$1" == "auth" ]; then
 	auth_key=true
-	user=$2
+	account_user=$2
 	shift 2
 	set $SSH_ORIGINAL_COMMAND
 else
@@ -20,13 +20,13 @@ $auth_key || request_userpass
 [ -z "$1" ] && err 'missing command.'
 
 # if public key and git command
-$auth_key && is_git $1 && run_git "$user" $*
+$auth_key && is_git $1 && run_git "$account_user" $*
 
 # otherwise it is git-hell command
 execfile="$execdir/cmd_$1"
 test -x "$execfile" || err "Invalid command '$1'."
 shift	# ignore command name $1
-$execfile $user $*
+$execfile $account_user $*
 
 exit 0
 
