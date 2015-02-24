@@ -1,0 +1,12 @@
+#!/bin/bash
+# VERSION: 1
+# HELP: Show authenticated username 
+# USAGE: id
+. $(dirname $0)/libhell
+
+user=$1
+
+echo $user
+
+exit 0
+
