@@ -35,11 +35,21 @@ To get help
 
      ssh git@hostname.org help
 
-First time: enable account, add public key and change password (as an example git-hell user "jure" is used)
+Enable account and change password
 
     ssh git@hostname.org enable
-    ssh git@hostname.org addkey
     ssh git@hostname.org passwd
+
+Generate private/public key (do this only if you do not already have done it before)
+
+    ssh-keygen
+
+Install public key to git-hell
+
+    cat .ssh/id_rsa.pub
+    # copy printed key (including ssh-rsa and user@hostname)
+    ssh git@hostname.org addkey
+    # paste key when asked
 
 Create and clone repository
 
