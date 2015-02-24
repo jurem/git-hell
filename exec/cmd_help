@@ -6,28 +6,28 @@
 
 
 show_all() {
-	cd $(dirname $0)
 	print_header
 	echo 
 	echo "Available commands:"
+	cd $(dirname $0)
 	for f in cmd_*; do
 		if [ -x "$f" ]; then
-			printf "  %-10s" "${f:4}"
-			echo "$(read_tag "$f" HELP)"
+			local cmd=${f:4}
+			printf "  %-10s" $cmd
+			echo $(read_tag $cmd HELP)
 		fi
 	done
 }
 
 
 show_one() {
-	local file="cmd_$1"
-	cd $(dirname $0)
+	local cmd=$1
 	print_header
 	echo
-	echo "Command: $1"
-	echo -e "  version:\t$(read_tag "$file" VERSION)"
-	echo -e "  usage:\t$(read_tag "$file" USAGE)"
-	echo -e "  help:\t\t$(read_tag "$file" HELP)"
+	echo "Command: $cmd"
+	echo -e "  version:\t" $(read_tag "$cmd" VERSION)
+	echo -e "  usage:\t" $(read_tag "$cmd" USAGE)
+	echo -e "  help:\t\t$(read_tag "$cmd" HELP)"
 }
 
 

@@ -17,14 +17,14 @@ fi
 $auth_key || request_userpass
 
 # important to check this (security hole: ssh user@host auth jure ...)
-[ -z "$1" ] && err 'missing command.'
+[ -z "$1" ] && die 'missing command.'
 
 # if public key and git command
 $auth_key && is_git $1 && run_git "$account_user" $*
 
 # otherwise it is git-hell command
-execfile="$execdir/cmd_$1"
-test -x "$execfile" || err "Invalid command '$1'."
+execfile="$(command_path $1)"
+test -x "$execfile" || die "Invalid command '$1'."
 shift	# ignore command name $1
 $execfile $account_user $*
 

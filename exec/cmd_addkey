@@ -11,16 +11,16 @@ echo -n "Enter key: "
 read key
 
 # write key to file
-keyfile=$(tempfile) && echo "$key" >$keyfile
+keyfile=$(tempfile) && echo "$key" >"$keyfile" 2>/dev/null || die 'cannot create temporary file.'
 
 # check fingerprint
-if ! ssh-keygen -lf $keyfile &>/dev/null; then
-	rm $keyfile
-	bye "Invalid key entered."
+if ! ssh-keygen -lf "$keyfile" &>/dev/null; then
+	rm "$keyfile"
+	die 'invalid key entered.'
 fi
 
-rm $keyfile
-store_key "$user" "$key"
+rm "$keyfile"
+append_key "$user" "$key" || die 'cannot add key to the account.'
 echo 'Key successfuly added.'
 
 exit 0

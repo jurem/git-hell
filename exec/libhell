@@ -7,31 +7,21 @@ confdir="$githelldir/conf"
 accountsfile="$confdir/accounts.csv"
 repodir="$githelldir/repo"
 
+
 bye() {
 	echo "$1"
 	exit ${2:-42}
 }
 
 
-err() {
-	echo "Error: $1"
-	exit ${2:-42}
-}
-
-
 die() {
-	echo "Fatal: $1"
+	echo "Error: $1"
 	exit ${2:-42}
 }
 
 
 trace() {
 	echo "$@" >&2
-}
-
-
-run_interactive_shell() {
-	err 'interactive shell disabled.'
 }
 
 
@@ -50,7 +40,7 @@ request_userpass() {
 account_read() {
 	local user=$1
 	local file=${2:-$accountsfile}
-	read account_user account_pass account_active account_rest <<< $(egrep "^$user\>" "$file")
+	read account_user account_pass account_active account_rest <<< $(egrep "^$user\>" "/dev/$file")
 	[ "$account_active" != "true" ] && account_active=false
 }
 
@@ -61,10 +51,10 @@ account_change() {
 }
 
 
-store_key() {
+append_key() {
         local user=$1
         local key=$2
-        mkdir -p ~/.ssh
+        mkdir -p ~/.ssh 2>/dev/null &&
         { echo -n "command=\"auth $user\","
           echo -n 'no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty '
           echo "$key"
@@ -72,19 +62,27 @@ store_key() {
 }
 
 
+repo_name() {
+	# user-friendly repository name: strip any dirs and extension
+	local repo=$(basename $1 .git)
+	echo $repo
+}
+
+
 repo_path() {
 	local user=$1
-	local repo=$2
-	echo "$repodir/$(basename $user-$repo .git).git"
+	local repo=$(repo_name $2)
+	echo "$repodir/$user-$repo.git"
 }
 
 
 repo_init() {
 	local user=$1
 	local repo=$2
-	mkdir -p "$repodir"
-	git init -q --bare "$(repo_path $user $repo)"
-	echo "Initialized repository '$repo'."
+	local path="$(repo_path $user $repo)"
+	mkdir -p "$repodir" &&
+	git init --bare "$path" &>/dev/null || die 'cannot initialize repository.'
+	echo "Repository '$(repo_name $repo)' initialized."
 }
 
 
@@ -111,10 +109,16 @@ run_git() {
 }
 
 
+command_path() {
+	local cmd=$1
+	echo "$execdir/cmd_$cmd"
+}
+
+
 read_tag() {
-        local file=$1
+        local cmd=$1
         local tag=$2
-        egrep "^#\s*$tag:" "$file" | cut -d: -f2
+        egrep "^#\s*$tag:" "$(command_path $cmd)" | cut -d: -f2
 }
 
 

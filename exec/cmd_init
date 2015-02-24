@@ -7,7 +7,7 @@
 user=$1
 repo=$2
 
-cd "$repodir"
+[ -z "$repo" ] && die 'no repository given.'
 repo_init $user $repo
 
 exit 0
