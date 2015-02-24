@@ -1,9 +1,37 @@
 #!/bin/bash
+# VERSION: 1
+# HELP: Show short help
+# USAGE: help [command]
+. $(dirname $0)/libhell
 
-cd $(dirname $0)
-for f in cmd_*; do
-	[ -x "$f" ] && echo "${f:4}"
-done
+
+show_all() {
+	cd $(dirname $0)
+	print_header
+	echo 
+	echo "Available commands:"
+	for f in cmd_*; do
+		if [ -x "$f" ]; then
+			printf "  %-10s" "${f:4}"
+			echo "$(read_tag "$f" HELP)"
+		fi
+	done
+}
+
+
+show_one() {
+	local file="cmd_$1"
+	cd $(dirname $0)
+	print_header
+	echo
+	echo "Command: $1"
+	echo -e "  version:\t$(read_tag "$file" VERSION)"
+	echo -e "  usage:\t$(read_tag "$file" USAGE)"
+	echo -e "  help:\t\t$(read_tag "$file" HELP)"
+}
+
+
+[ -z "$2" ] && show_all || show_one $2
 
 exit 0
 

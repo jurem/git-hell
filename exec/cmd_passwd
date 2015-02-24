@@ -1,4 +1,7 @@
 #!/bin/bash
+# VERSION: 1
+# HELP: Change account password
+# USAGE: passwd
 . $(dirname $0)/libhell
 
 user=$1

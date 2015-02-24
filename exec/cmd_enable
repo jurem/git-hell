@@ -1,4 +1,7 @@
 #!/bin/bash
+# VERSION: 1
+# HELP: Enables account
+# USAGE: enable
 . $(dirname $0)/libhell
 
 user=$1

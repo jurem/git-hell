@@ -1,4 +1,7 @@
 #!/bin/bash
+# VERSION: 1
+# HELP: Show git-hell information
+# USAGE: info
 . $(dirname $0)/libhell
 
 echo "git-hell $version"
