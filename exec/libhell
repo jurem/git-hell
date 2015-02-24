@@ -86,6 +86,19 @@ repo_init() {
 }
 
 
+is_git() {
+	local cmd=$1
+	case $cmd in
+		git-receive-pack|git-upload-pack|git-upload-archive)
+			 return 0
+		;;
+		*)
+			return 1
+		;;
+	esac
+}
+
+
 run_git() {
 	local user=$1
 	local gitcmd=${2:4}

@@ -18,9 +18,13 @@ fi
 
 check_credentials
 
+# important to check this (security hole: ssh user@host auth jure ...)
 [ -z "$command" ] && err 'missing command.'
-[ "${command:0:3}" = "git" ] && run_git "$user" $command
 
+# if git command and public key
+$auth_key && is_git $command && run_git "$user" $command
+
+# otherwise it is git-hell command
 set $command
 execfile="$execdir/cmd_$1"
 test -x "$execfile" || err "Invalid command '$1'."
@@ -28,5 +32,4 @@ shift	# ignore command name $1
 $execfile $user $*
 
 exit 0
-			
-#export VAR_CLEAN=”`echo “${SSH_ORIGINAL_COMMAND}” | tr -cd ‘[:alnum:] [:space:]’`”
+
