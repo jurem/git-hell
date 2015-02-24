@@ -35,13 +35,15 @@ run_interactive_shell() {
 }
 
 
-check_credentials() {
-	$auth_key && return
-	# otherwise ask for password
-	echo -n "Enter git-hell password for '$user': "
+request_userpass() {
+	local enteruser
+	local enterpass
+	echo -n "Enter git-hell username: "
+	read -s enteruser
+	echo -n "Enter git-hell password: "
 	read -s enterpass
-	account_read $user
-	[ -z "$user" -o "$account_pass" != "$enterpass" ] && bye 'Access denied.'
+	account_read $enteruser
+	[ -z "$account_user" -o "$account_pass" != "$enterpass" ] && bye 'Access denied.'
 }
 
 
