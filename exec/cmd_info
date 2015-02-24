@@ -13,6 +13,8 @@ tempfile --version
 mkdir --version | head -1
 basename --version | head -1
 dirname --version | head -1
+printf --version | head -1
+cut --version | head -1
 
 exit 0
 
