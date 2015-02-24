@@ -18,7 +18,9 @@ Installation is done on the remote machine. Superuser account is needed to creat
 1) Create a shell account to be used for hosting git repositories and login into newly created account. As an example here account "git" and home directory "/home/git" are used. Git-hell is to be installed into "/home/git/git-hell". Change these to suit your needs. 
 
     sudo useradd -m -c "Git-hell hosting" -d "/home/git" -s "/home/git/git-hell/exec/shell" git
+    sudo passwd git
     sudo su -s /bin/bash git
+    cd
 
 2) Download or clone source code.
 
