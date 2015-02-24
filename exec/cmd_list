@@ -6,6 +6,7 @@
 
 user=$1
 
+test -d "$repodir" || exit 0
 cd "$repodir"
 for f in $user-*; do
    [ -d "$f" ] && echo "${f#$user-}"
