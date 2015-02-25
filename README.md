@@ -40,7 +40,7 @@ Enable account and change password
     ssh git@hostname.org enable
     ssh git@hostname.org passwd
 
-Generate private/public key (do this only if you do not already have done it before)
+Generate private/public key (only if you haven't done it before)
 
     ssh-keygen
 
