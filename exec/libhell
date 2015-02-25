@@ -40,7 +40,7 @@ request_userpass() {
 account_read() {
 	local user=$1
 	local file=${2:-$accountsfile}
-	read account_user account_pass account_active account_rest <<< $(egrep "^$user\>" "/dev/$file")
+	read account_user account_pass account_active account_rest <<< $(egrep "^$user\>" "$file")
 	[ "$account_active" != "true" ] && account_active=false
 }
 
