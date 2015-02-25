@@ -24,7 +24,7 @@ Installation is done on the remote machine. Superuser account is needed to creat
 
 2) Download or clone source code.
 
-    git clone git@github.com:jurem/git-hell.git
+    git clone https://github.com/jurem/git-hell.git
 
 3) Edit tab-delimited accounts file "~/git-hell/conf/accounts.csv". For each account specify at least user and password. Passwords are (currently) stored as plain text.
 
