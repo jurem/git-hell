@@ -1,14 +1,19 @@
 # git-hell
-Git hosting on one shell account.
+Git-hell is a login shell replacement which supports hosting many repositories on one shell account. Normal shell sessions are disabled and only predefined commands are accepted. New commands can easily be added.
 
-Similar to git-shell, but supports multiple private accounts identified via user's public key. Similar to gitosis and gitolite, but with minimum administration - public keys are installed by users themselves.
+The main motivation for this project is to be able to support hosting of many private git repositories with minimal administration. For example, many student repositories which are shared only with a teacher.
 
-Some features:
+Features:
 * one shell account can host multiple git-hell accounts
 * each git-hell account can host multiple repositories
 * users are identified via public key
-* each public key corresponds to one git-hell account
-* installation of public key is done by user via classical username/password identification
+* each public key corresponds to one git-hell account (many-to-one)
+* initial authentication and set up is done via classical username/password identification
+* initial installation of public key is done by the users themselves
+* supports several commands such as help, list, addkey, init, ...
+* easy to extend
+
+Git-hell is similar to git-shell, but supports multiple private accounts identified via user's public key. It is also similar to gitosis and gitolite, but with minimum administration necessary - public keys are installed by users themselves.
 
 Installation
 ------------
